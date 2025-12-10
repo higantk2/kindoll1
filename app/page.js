@@ -3,45 +3,51 @@
 import Link from 'next/link';
 import { TypeAnimation } from 'react-type-animation';
 import { motion } from 'framer-motion';
+import CardBackground from '@/components/CardBackground'; 
 
-// Animations
 const fadeInUp = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
 };
 
 const staggerContainer = {
-  visible: { transition: { staggerChildren: 0.2 } }
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { staggerChildren: 0.15 } 
+  }
 };
 
 export default function Home() {
   return (
     <main>
+      {/* FETCHES REAL CARDS FROM API */}
+      <CardBackground />
+
       {/* Hero Section */}
-      <section id="hero" className="container">
-          {/* LEFT SIDE: Text */}
+      <section id="hero" className="container" style={{ minHeight: '90vh' }}>
           <motion.div 
             className="hero-content"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false }}
+            viewport={{ once: false, amount: 0.3 }} 
             variants={staggerContainer}
           >
               <motion.h1 variants={fadeInUp}>KINDOLL HYACINTH</motion.h1>
               
-              <motion.div variants={fadeInUp}>
-                <h2 className="typing-target" style={{ height: '50px' }}>
-                  <TypeAnimation
-                    sequence={[
-                      'Tech Enthusiast', 1000,
-                      'Frontend Developer', 1000,
-                      'UI Designer', 1000
-                    ]}
-                    wrapper="span"
-                    speed={50}
-                    repeat={Infinity}
-                  />
-                </h2>
+              <motion.div variants={fadeInUp} style={{ minHeight: '3rem' }}>
+                  <h2 className="typing-target">
+                    <TypeAnimation
+                      sequence={[
+                        'Tech Enthusiast', 1000,
+                        'Frontend Developer', 1000,
+                        'UI Designer', 1000
+                      ]}
+                      wrapper="span"
+                      speed={50}
+                      repeat={Infinity}
+                    />
+                  </h2>
               </motion.div>
 
               <motion.p variants={fadeInUp}>
@@ -58,7 +64,7 @@ export default function Home() {
               </motion.div>
 
               <motion.div className="cta-container" variants={fadeInUp}>
-                  <Link href="#contact" className="primary-btn">Let's Talk</Link>
+                  <Link href="#contact" className="primary-btn">Let&apos;s Talk</Link>
                   <a href="/images/Kindoll_CV.pdf" download className="secondary-btn">Download CV</a>
               </motion.div>
 
@@ -70,20 +76,22 @@ export default function Home() {
               </motion.div>
           </motion.div>
 
-          {/* RIGHT SIDE: Profile Image */}
           <motion.div 
             className="profile-image-container"
-            initial={{ opacity: 0, scale: 0.5 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: false }}
             transition={{ duration: 0.8 }}
           >
-              <img src="https://i.pinimg.com/originals/5e/a0/fa/5ea0faff904b5289355ddf226d89193e.jpg" alt="KINDOLL HYACINTH" className="profile-image" />
+              {/* MORPHING PROFILE STRUCTURE */}
+              <div className="profile-glow-container">
+                  <img src="https://i.pinimg.com/originals/5e/a0/fa/5ea0faff904b5289355ddf226d89193e.jpg" alt="KINDOLL HYACINTH" className="profile-image" />
+              </div>
           </motion.div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="container">
+      <section id="projects" className="container" style={{ minHeight: '90vh', marginBottom: '15vh' }}>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -101,11 +109,11 @@ export default function Home() {
           >
               {[
                 { title: "Educational Tour", img: "/images/image7.jpg", desc: "Immersive travel journal.", tags: ["HTML", "CSS", "JS"], link: "https://eductour.vercel.app/" },
-                { title: "Valorant Tracker", img: "/images/image2.jpg", desc: "Agent tracking app.", tags: ["React", "API"], link: "https://valoraanttt.vercel.app/" },
-                { title: "Valentine Surprise", img: "/images/image1.jpg", desc: "Animated dashboard.", tags: ["SCSS", "JS"], link: "https://valentines-blush-delta.vercel.app/" },
-                { title: "Web Exercise 2", img: "/images/image4.jpg", desc: "Layout practice.", tags: ["HTML", "CSS"], link: "https://exercise2-chi.vercel.app/" },
-                { title: "Exercise 7", img: "/images/image5.jpg", desc: "JS Logic.", tags: ["React", "JS"], link: "https://exercise-7-taupe.vercel.app/" },
-                { title: "Adv102 Final", img: "/images/image3.jpg", desc: "Advanced Web Tech.", tags: ["Next.js", "DB"], link: "https://advfinals.vercel.app/" }
+                { title: "Valorant Tracker", img: "/images/image2.jpg", desc: "Valorant Agents Info", tags: ["React", "API"], link: "https://valoraanttt.vercel.app/" },
+                { title: "Valentine Surprise", img: "/images/image1.jpg", desc: "Surprise Gift for Valentines", tags: ["SCSS", "JS"], link: "https://valentines-blush-delta.vercel.app/" },
+                { title: "Web Exercise 2", img: "/images/image4.jpg", desc: "practice & first portfolio", tags: ["HTML", "CSS"], link: "https://exercise2-chi.vercel.app/" },
+                { title: "Exercise 7", img: "/images/image5.jpg", desc: "Mini exercise game project", tags: ["React", "JS"], link: "https://exercise-7-taupe.vercel.app/" },
+                { title: "Adv102 Final", img: "/images/image3.jpg", desc: "Site to save your favorite books", tags: ["Next.js", "DB"], link: "https://advfinals.vercel.app/" }
               ].map((project, index) => (
                 <motion.div key={index} className="project-card" variants={fadeInUp} whileHover={{ y: -10 }}>
                     <img src={project.img} alt={project.title} className="project-image" />
@@ -125,7 +133,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="container">
+      <section id="contact" className="container" style={{ minHeight: '80vh' }}>
           <motion.div 
             className="contact-wrapper"
             initial={{ opacity: 0, scale: 0.9 }}

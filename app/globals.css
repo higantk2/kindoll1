@@ -1,7 +1,27 @@
 /* --- 1. VARIABLES & THEME SETUP --- */
 :root {
+    /* DEFAULT IS NOW "SOFT BLACK" (DARK MODE) */
     --primary-color: #6366f1;
     --secondary-color: #a855f7;
+    
+    /* CHANGED: Not #000000 anymore, but #0a0a0a (Soft/Light Black) */
+    --bg-color: #0a0a0a; 
+    
+    /* CHANGED: Cards are slightly lighter to stand out from the soft black */
+    --card-bg: #171717;  
+    
+    --text-color: #ffffff;
+    --text-light: #94a3b8;
+    --input-bg: #262626; /* Slightly lighter for inputs */
+    --border-color: #404040;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* LIGHT MODE (When button is clicked) */
+body.dark-mode {
+    --primary-color: #4f46e5;
+    --secondary-color: #9333ea;
     --bg-color: #f0f4f8; 
     --card-bg: #ffffff;
     --text-color: #1e293b;
@@ -9,19 +29,6 @@
     --input-bg: #ffffff;
     --border-color: #e2e8f0;
     --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
-body.dark-mode {
-    --primary-color: #818cf8;
-    --secondary-color: #c084fc;
-    --bg-color: #0f172a;
-    --card-bg: #1e293b;
-    --text-color: #f1f5f9;
-    --text-light: #94a3b8;
-    --input-bg: #334155;
-    --border-color: #475569;
-    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.5);
 }
 
 /* --- 2. BASE STYLES --- */
@@ -42,7 +49,9 @@ a { text-decoration: none; color: inherit; }
 /* --- 3. NAVBAR & LOGO --- */
 .navbar {
     position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; 
-    background: var(--card-bg); border-bottom: 1px solid var(--border-color);
+    background: rgba(var(--card-bg), 0.85); /* Semi-transparent */
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
     transition: background 0.3s ease;
 }
 header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
@@ -61,14 +70,15 @@ nav ul { list-style: none; display: flex; gap: 2rem; margin: 0; padding: 0; }
 
 nav a.nav-link { 
     font-weight: 600; color: var(--text-light); transition: all 0.3s ease; 
-    display: inline-block;
+    display: inline-block; position: relative;
 }
 nav a.nav-link:hover, nav a.nav-link.active { 
     color: var(--primary-color); 
     transform: scale(1.2); 
+    text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
 }
 
-/* FIXED THEME TOGGLE: Now stays visible on hover */
+/* THEME TOGGLE */
 #theme-toggle { 
     background: transparent; 
     border: 2px solid var(--border-color); 
@@ -81,27 +91,21 @@ nav a.nav-link:hover, nav a.nav-link.active {
 }
 #theme-toggle:hover { 
     border-color: var(--primary-color);
-    color: var(--primary-color); /* Turns purple instead of disappearing */
+    color: var(--primary-color);
     transform: rotate(15deg) scale(1.1); 
-    background: rgba(99, 102, 241, 0.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* --- 4. SECTIONS --- */
 section {
     padding: 6rem 0; 
-    /* Fixes seeing other sections when clicking nav links */
     min-height: 100vh; 
     display: flex; flex-direction: column; justify-content: center;
     scroll-margin-top: 80px; 
 }
 
 /* Hero Grid */
-#hero { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 3rem; 
-    align-items: center; 
-}
+#hero { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
 
 .hero-content h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; background: linear-gradient(to right, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .hero-content h2 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-color); font-weight: 600; }
@@ -125,7 +129,7 @@ section {
 .secondary-btn { background: var(--card-bg); color: var(--text-color); border: 2px solid var(--border-color); }
 .secondary-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
 
-/* --- 6. PROFILE IMAGE (GLOW + MORPH + HOVER) --- */
+/* --- 6. PROFILE IMAGE (Gradient Matches Text) --- */
 .social-links { display: flex; gap: 1.5rem; }
 .social-icon { font-size: 1.8rem; color: var(--text-light); transition: 0.3s; }
 .social-icon:hover { color: var(--primary-color); transform: translateY(-3px) scale(1.1); }
@@ -137,34 +141,34 @@ section {
     padding: 20px;
 }
 
-/* The Animated Glow Ring */
 .profile-glow-container {
     position: relative;
     display: inline-block;
 }
+
 .profile-glow-container::before {
     content: '';
     position: absolute;
-    inset: -5px; /* Creates the border thickness */
-    background: linear-gradient(45deg, var(--primary-color), #ff00cc, var(--secondary-color));
+    inset: -5px; 
+    /* Gradient matches the "KINDOLL HYACINTH" text exactly */
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
     z-index: 0;
     border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
-    filter: blur(15px); /* Makes it glow */
+    filter: blur(15px); 
     opacity: 0.8;
     animation: morph 8s ease-in-out infinite;
 }
 
 .profile-image { 
     width: 320px; height: 320px; object-fit: cover; 
-    border-radius: 30% 70% 70% 30%/30% 30% 70% 70%; 
-    border: 4px solid var(--card-bg); /* Solid border to separate image from glow */
+    border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
+    border: 4px solid var(--card-bg); 
     box-shadow: var(--shadow); 
     position: relative; z-index: 2; 
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation: morph 8s ease-in-out infinite;
 }
 
-/* HOVER EFFECT: Gets Bigger */
 .profile-image:hover {
     transform: scale(1.1); 
     cursor: pointer;
@@ -194,7 +198,7 @@ section {
 .project-links a:hover { color: var(--primary-color); }
 .project-tags { margin-top: 10px; }
 
-/* --- 8. CONTACT FORM (Centered & Full Height) --- */
+/* --- 8. CONTACT FORM --- */
 #contact { text-align: center; justify-content: center; }
 .contact-wrapper { max-width: 600px; margin: 0 auto; width: 100%; }
 .contact-form { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
@@ -208,6 +212,7 @@ section {
 .form-group input:hover, .form-group textarea:hover,
 .form-group input:focus, .form-group textarea:focus {
     border-color: var(--primary-color);
+    outline: none;
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.1);
 }
 
@@ -232,33 +237,66 @@ footer { padding: 2rem 0; text-align: center; background: var(--card-bg); border
 .fixed-bottom-nav { position: fixed; bottom: 2rem; left: 0; width: 100%; display: flex; justify-content: center; z-index: 900; pointer-events: none; }
 .fixed-bottom-nav .back-btn { pointer-events: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
 
-/* --- 11. MODAL (FIXED CENTERED VIEW) --- */
+/* --- 11. MODAL --- */
 .modal { 
     display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; 
     background-color: rgba(0,0,0,0.95); backdrop-filter: blur(5px);
-    /* THIS CENTERS IT PERFECTLY - NO SCROLLING */
-    display: flex !important; 
-    align-items: center; 
-    justify-content: center; 
-    flex-direction: column;
+    display: flex !important; align-items: center; justify-content: center; flex-direction: column;
 }
-.modal-content { 
-    max-width: 90%; 
-    max-height: 85vh; /* Ensures it fits on screen */
-    object-fit: contain; 
-    border-radius: 8px; 
-    animation: zoomIn 0.3s; 
-    box-shadow: 0 0 50px rgba(0,0,0,0.5);
-}
+.modal-content { max-width: 90%; max-height: 85vh; object-fit: contain; border-radius: 8px; animation: zoomIn 0.3s; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
 @keyframes zoomIn { from {transform:scale(0.8); opacity: 0;} to {transform:scale(1); opacity: 1;} }
-.close-modal { 
-    position: absolute; top: 20px; right: 35px; 
-    color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; 
-}
+.close-modal { position: absolute; top: 20px; right: 35px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; transition: 0.3s; }
 .close-modal:hover { color: var(--primary-color); }
 #caption { margin-top: 1rem; color: #ccc; font-size: 1.2rem; text-align: center; }
 
-/* Mobile */
+/* --- 12. REAL API CARDS STYLES --- */
+.cards-background {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    z-index: -1; overflow: hidden; pointer-events: none;
+}
+
+.floating-card-img {
+    position: absolute;
+    width: 70px; 
+    animation: floatCard 35s infinite linear; 
+    opacity: 0.85;
+}
+
+/* Dark mode adjustment for cards (optional - makes them fit the soft black better) */
+.floating-card-img img {
+    filter: brightness(0.9) contrast(1.1);
+}
+body.dark-mode .floating-card-img img {
+    filter: brightness(1) contrast(1);
+}
+
+@keyframes floatCard {
+    0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
+    15% { opacity: 0.85; }
+    85% { opacity: 0.85; }
+    100% { transform: translateY(-10vh) rotate(360deg) scale(1.1); opacity: 0; }
+}
+
+/* POSITIONS */
+.c1  { left: 2%;  animation-duration: 25s; }
+.c2  { left: 8%;  animation-duration: 32s; animation-delay: -5s; }
+.c3  { left: 14%; animation-duration: 28s; animation-delay: -12s; }
+.c4  { left: 20%; animation-duration: 35s; animation-delay: -2s; }
+.c5  { left: 26%; animation-duration: 22s; animation-delay: -20s; }
+.c6  { left: 32%; animation-duration: 30s; animation-delay: -8s; }
+.c7  { left: 38%; animation-duration: 26s; animation-delay: -15s; }
+.c8  { left: 44%; animation-duration: 33s; animation-delay: -3s; }
+.c9  { left: 50%; animation-duration: 24s; animation-delay: -10s; }
+.c10 { left: 56%; animation-duration: 29s; animation-delay: -6s; }
+.c11 { left: 62%; animation-duration: 34s; animation-delay: -18s; }
+.c12 { left: 68%; animation-duration: 27s; animation-delay: -1s; }
+.c13 { left: 74%; animation-duration: 31s; animation-delay: -14s; }
+.c14 { left: 80%; animation-duration: 23s; animation-delay: -4s; }
+.c15 { left: 86%; animation-duration: 36s; animation-delay: -9s; }
+.c16 { left: 92%; animation-duration: 25s; animation-delay: -22s; }
+.c17 { left: 96%; animation-duration: 30s; animation-delay: -7s; }
+.c18 { left: 5%;  animation-duration: 38s; animation-delay: -25s; }
+
 @media (max-width: 768px) {
     #hero { grid-template-columns: 1fr; text-align: center; margin-top: 0; gap: 2rem; }
     .hero-content h1 { font-size: 2.5rem; }

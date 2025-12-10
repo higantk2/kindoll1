@@ -3,27 +3,29 @@ import { useState, useEffect } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
 export default function ThemeToggle() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [isLightMode, setIsLightMode] = useState(false); // Default is now Dark (Black)
 
   useEffect(() => {
-    // Check local storage or system preference on load
-    const isDark = localStorage.getItem('theme') === 'dark';
-    if (isDark) {
-      document.body.classList.add('dark-mode');
-      setDarkMode(true);
+    // Check if user previously selected Light Mode
+    const isLight = localStorage.getItem('theme') === 'light';
+    if (isLight) {
+      document.body.classList.add('dark-mode'); // Note: 'dark-mode' class now applies Light styles
+      setIsLightMode(true);
     }
   }, []);
 
   const toggleTheme = () => {
-    const newMode = !darkMode;
-    setDarkMode(newMode);
+    const newMode = !isLightMode;
+    setIsLightMode(newMode);
     
     if (newMode) {
-      document.body.classList.add('dark-mode');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.body.classList.remove('dark-mode');
+      // User wants Light Mode
+      document.body.classList.add('dark-mode'); 
       localStorage.setItem('theme', 'light');
+    } else {
+      // User wants Dark/Black Mode
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('theme', 'dark');
     }
   };
 
@@ -31,10 +33,11 @@ export default function ThemeToggle() {
     <button 
       onClick={toggleTheme} 
       id="theme-toggle"
-      aria-label="Toggle Dark Mode"
-      style={{ cursor: 'none' }} // Hide default cursor so custom one works
+      aria-label="Toggle Theme"
+      style={{ cursor: 'pointer' }} 
     >
-      {darkMode ? <FaSun className="text-yellow-400" /> : <FaMoon className="text-indigo-500" />}
+      {/* If isLightMode (White bg), show Moon. If Dark/Black bg, show Sun. */}
+      {isLightMode ? <FaMoon className="text-indigo-500" /> : <FaSun className="text-yellow-400" />}
     </button>
   );
 }

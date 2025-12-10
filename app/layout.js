@@ -2,6 +2,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import ThemeToggle from '@/components/ThemeToggle';
+import Footer from '@/components/Footer'; // Import the new Footer
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -37,12 +38,9 @@ export default function RootLayout({ children }) {
 
         {children}
 
-        {/* RESTORED FOOTER */}
-        <footer>
-            <div className="container">
-                <p>© {new Date().getFullYear()} KINDOLL HYACINTH. All rights reserved.</p>
-            </div>
-        </footer>
+        {/* Use the new Footer component that hides itself on /certificates */}
+        <Footer />
+        
       </body>
     </html>
   );

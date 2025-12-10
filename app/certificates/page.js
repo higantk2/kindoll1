@@ -2,17 +2,26 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import CardBackground from '@/components/CardBackground'; // Import Cards
 
+// Smoother animation settings
 const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.8, ease: "easeOut" } 
+  }
 };
 
 const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { 
+      staggerChildren: 0.2, // Increased stagger for "smoother" cascade
+      delayChildren: 0.1
+    }
   }
 };
 
@@ -30,11 +39,13 @@ export default function Certificates() {
 
   return (
     <section className="container cert-container">
+        {/* ADD THE BACKGROUND CARDS HERE */}
+        <CardBackground />
+
         <motion.div 
           className="cert-header"
           initial="hidden"
-          animate="visible" // Force immediate load
-          transition={{ duration: 0.6 }}
+          animate="visible"
           variants={fadeInUp}
         >
             <h1>My Certificates</h1>
@@ -44,7 +55,7 @@ export default function Certificates() {
         <motion.div 
           className="cert-grid"
           initial="hidden"
-          animate="visible" // Force immediate load
+          animate="visible"
           variants={staggerContainer}
         >
             {certificates.map((cert, index) => (
@@ -55,16 +66,16 @@ export default function Certificates() {
                     className="cert-image"
                     onClick={() => setSelectedImage(cert)}
                     variants={fadeInUp}
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
+                    whileTap={{ scale: 0.98 }}
                 />
             ))}
         </motion.div>
 
-        {/* Modal Logic */}
         {selectedImage && (
             <div 
                 className="modal" 
-                style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.95)' }} 
+                style={{ display: 'flex', backgroundColor: 'rgba(0,0,0,0.95)' }} 
                 onClick={() => setSelectedImage(null)}
             >
                 <span className="close-modal">&times;</span>
