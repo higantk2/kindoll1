@@ -3,13 +3,14 @@ import { useState, useEffect } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
 export default function ThemeToggle() {
-  const [isLightMode, setIsLightMode] = useState(false); // Default is now Dark (Black)
+  // Default is "False" (meaning NOT light mode, so Dark mode)
+  const [isLightMode, setIsLightMode] = useState(false); 
 
   useEffect(() => {
-    // Check if user previously selected Light Mode
-    const isLight = localStorage.getItem('theme') === 'light';
-    if (isLight) {
-      document.body.classList.add('dark-mode'); // Note: 'dark-mode' class now applies Light styles
+    // Check if user previously saved 'light'
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-mode');
       setIsLightMode(true);
     }
   }, []);
@@ -19,12 +20,12 @@ export default function ThemeToggle() {
     setIsLightMode(newMode);
     
     if (newMode) {
-      // User wants Light Mode
-      document.body.classList.add('dark-mode'); 
+      // User clicked Sun to go Light
+      document.body.classList.add('light-mode');
       localStorage.setItem('theme', 'light');
     } else {
-      // User wants Dark/Black Mode
-      document.body.classList.remove('dark-mode');
+      // User clicked Moon to go Dark (Default)
+      document.body.classList.remove('light-mode');
       localStorage.setItem('theme', 'dark');
     }
   };
@@ -36,7 +37,7 @@ export default function ThemeToggle() {
       aria-label="Toggle Theme"
       style={{ cursor: 'pointer' }} 
     >
-      {/* If isLightMode (White bg), show Moon. If Dark/Black bg, show Sun. */}
+      {/* If Light Mode: Show Moon. If Dark Mode: Show Sun. */}
       {isLightMode ? <FaMoon className="text-indigo-500" /> : <FaSun className="text-yellow-400" />}
     </button>
   );

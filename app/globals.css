@@ -1,25 +1,25 @@
 /* --- 1. VARIABLES & THEME SETUP --- */
 :root {
-    /* DEFAULT IS NOW "SOFT BLACK" (DARK MODE) */
+    /* DEFAULT THEME IS NOW DARK (SOFT BLACK) */
     --primary-color: #6366f1;
     --secondary-color: #a855f7;
     
-    /* CHANGED: Not #000000 anymore, but #0a0a0a (Soft/Light Black) */
+    /* Soft Black Background */
     --bg-color: #0a0a0a; 
     
-    /* CHANGED: Cards are slightly lighter to stand out from the soft black */
+    /* Slightly lighter dark for cards */
     --card-bg: #171717;  
     
     --text-color: #ffffff;
     --text-light: #94a3b8;
-    --input-bg: #262626; /* Slightly lighter for inputs */
+    --input-bg: #262626; 
     --border-color: #404040;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* LIGHT MODE (When button is clicked) */
-body.dark-mode {
+/* LIGHT MODE OVERRIDES (Applied when class 'light-mode' is present) */
+body.light-mode {
     --primary-color: #4f46e5;
     --secondary-color: #9333ea;
     --bg-color: #f0f4f8; 
@@ -49,7 +49,7 @@ a { text-decoration: none; color: inherit; }
 /* --- 3. NAVBAR & LOGO --- */
 .navbar {
     position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; 
-    background: rgba(var(--card-bg), 0.85); /* Semi-transparent */
+    background: rgba(var(--card-bg), 0.85); 
     border-bottom: 1px solid var(--border-color);
     backdrop-filter: blur(12px);
     transition: background 0.3s ease;
@@ -129,7 +129,7 @@ section {
 .secondary-btn { background: var(--card-bg); color: var(--text-color); border: 2px solid var(--border-color); }
 .secondary-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
 
-/* --- 6. PROFILE IMAGE (Gradient Matches Text) --- */
+/* --- 6. PROFILE IMAGE --- */
 .social-links { display: flex; gap: 1.5rem; }
 .social-icon { font-size: 1.8rem; color: var(--text-light); transition: 0.3s; }
 .social-icon:hover { color: var(--primary-color); transform: translateY(-3px) scale(1.1); }
@@ -150,7 +150,7 @@ section {
     content: '';
     position: absolute;
     inset: -5px; 
-    /* Gradient matches the "KINDOLL HYACINTH" text exactly */
+    /* Gradient matches KINDOLL HYACINTH text */
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
     z-index: 0;
     border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
@@ -262,11 +262,13 @@ footer { padding: 2rem 0; text-align: center; background: var(--card-bg); border
     opacity: 0.85;
 }
 
-/* Dark mode adjustment for cards (optional - makes them fit the soft black better) */
+/* Brightness adjustments for Light/Dark modes */
+/* Default (Soft Black Background) -> Slight dim to blend */
 .floating-card-img img {
     filter: brightness(0.9) contrast(1.1);
 }
-body.dark-mode .floating-card-img img {
+/* Light Mode (White Background) -> Full brightness */
+body.light-mode .floating-card-img img {
     filter: brightness(1) contrast(1);
 }
 
