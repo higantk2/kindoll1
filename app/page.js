@@ -85,7 +85,7 @@ export default function Home() {
           >
               {/* MORPHING PROFILE STRUCTURE */}
               <div className="profile-glow-container">
-                  <img src="https://i.pinimg.com/originals/5e/a0/fa/5ea0faff904b5289355ddf226d89193e.jpg" alt="KINDOLL HYACINTH" className="profile-image" />
+                  <img src="/images/profile.jpg" alt="KINDOLL HYACINTH" className="profile-image"/>  
               </div>
           </motion.div>
       </section>
