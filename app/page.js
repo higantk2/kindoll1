@@ -57,7 +57,7 @@ export default function Home() {
               <motion.div className="tech-stack" variants={fadeInUp}>
                   <h3>My Tech Stack</h3>
                   <div className="tags">
-                      {['HTML', 'CSS', 'JavaScript', 'React', 'Database', 'Node.js'].map((tech, i) => (
+                      {['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'MySQL', 'Node.js'].map((tech, i) => (
                           <span key={i} className="tag">{tech}</span>
                       ))}
                   </div>
@@ -82,11 +82,29 @@ export default function Home() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: false }}
             transition={{ duration: 0.8 }}
+            style={{ flexDirection: 'column', alignItems: 'center' }} 
           >
               {/* MORPHING PROFILE STRUCTURE */}
               <div className="profile-glow-container">
                   <img src="/images/profile.jpg" alt="KINDOLL HYACINTH" className="profile-image"/>  
               </div>
+
+              {/* LATIN MOTTO TEXT - INCREASED SIZE */}
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 1 }}
+                style={{ 
+                  marginTop: '1.5rem', 
+                  fontStyle: 'italic', 
+                  fontSize: '1.1rem', // Increased from 0.9rem
+                  color: 'var(--text-light)',
+                  textAlign: 'center',
+                  maxWidth: '350px'
+                }}
+              >
+                &quot;Hystericus et inutilis, aliquando alas mihi crescent&quot;
+              </motion.p>
           </motion.div>
       </section>
 

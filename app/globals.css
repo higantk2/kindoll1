@@ -265,11 +265,16 @@ footer { padding: 2rem 0; text-align: center; background: var(--card-bg); border
 /* Brightness adjustments for Light/Dark modes */
 /* Default (Soft Black Background) -> Slight dim to blend */
 .floating-card-img img {
-    filter: brightness(0.9) contrast(1.1);
+    /* Changed from: filter: brightness(0.9) contrast(1.1); */
+    filter: grayscale(100%) brightness(0.4) opacity(0.3); 
+    transition: filter 0.5s ease;
 }
 /* Light Mode (White Background) -> Full brightness */
 body.light-mode .floating-card-img img {
-    filter: brightness(1) contrast(1);
+    /* Reduced opacity to 10% and grayscale to make them subtle textures */
+    filter: grayscale(1%);
+    opacity: 0.6; 
+    transition: filter 0.5s ease, opacity 0.5s ease;
 }
 
 @keyframes floatCard {
