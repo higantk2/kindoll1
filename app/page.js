@@ -1,183 +1,148 @@
+'use client';
+
 import Link from 'next/link';
+import { TypeAnimation } from 'react-type-animation';
+import { motion } from 'framer-motion';
+
+// Animations
+const fadeInUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+const staggerContainer = {
+  visible: { transition: { staggerChildren: 0.2 } }
+};
 
 export default function Home() {
   return (
     <main>
-      {/* Animation Wrapper */}
-      <div className="animation-wrapper">
-          <div className="particle p1"></div>
-          <div className="particle p2"></div>
-          <div className="particle p3"></div>
-      </div>
-
       {/* Hero Section */}
       <section id="hero" className="container">
-          <div className="hero-content">
-              <h1>KINDOLL HYACINTH</h1>
-              <h2 className="typing-target">Frontend Developer</h2>
-              <p>I build interactive, accessible, and responsive web applications. Currently an IT student at Holy Cross of Davao College passionate about solving problems with code.</p>
+          {/* LEFT SIDE: Text */}
+          <motion.div 
+            className="hero-content"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+            variants={staggerContainer}
+          >
+              <motion.h1 variants={fadeInUp}>KINDOLL HYACINTH</motion.h1>
               
-              <div className="tech-stack">
+              <motion.div variants={fadeInUp}>
+                <h2 className="typing-target" style={{ height: '50px' }}>
+                  <TypeAnimation
+                    sequence={[
+                      'Tech Enthusiast', 1000,
+                      'Frontend Developer', 1000,
+                      'UI Designer', 1000
+                    ]}
+                    wrapper="span"
+                    speed={50}
+                    repeat={Infinity}
+                  />
+                </h2>
+              </motion.div>
+
+              <motion.p variants={fadeInUp}>
+                I build interactive, accessible, and responsive web applications. Currently an IT student at Holy Cross of Davao College.
+              </motion.p>
+              
+              <motion.div className="tech-stack" variants={fadeInUp}>
                   <h3>My Tech Stack</h3>
                   <div className="tags">
-                      <span className="tag"><i className="fab fa-html5"></i> HTML</span>
-                      <span className="tag"><i className="fab fa-css3-alt"></i> CSS</span>
-                      <span className="tag"><i className="fab fa-js"></i> JavaScript</span>
-                      <span className="tag"><i className="fab fa-react"></i> React</span>
-                      <span className="tag"><i className="fas fa-database"></i> Database</span>
-                      <span className="tag"><i className="fab fa-node-js"></i> Node.js</span>
+                      {['HTML', 'CSS', 'JavaScript', 'React', 'Database', 'Node.js'].map((tech, i) => (
+                          <span key={i} className="tag">{tech}</span>
+                      ))}
                   </div>
-              </div>
+              </motion.div>
 
-              <div className="cta-container">
-                  <Link href="#contact" className="primary-btn">
-                      Let's Talk <i className="fas fa-paper-plane"></i>
-                  </Link>
-                  <a href="/images/Kindoll_CV.pdf" download="Kindoll_CV.pdf" className="secondary-btn">
-                      Download CV <i className="fas fa-download"></i>
-                  </a>
-              </div>
+              <motion.div className="cta-container" variants={fadeInUp}>
+                  <Link href="#contact" className="primary-btn">Let's Talk</Link>
+                  <a href="/images/Kindoll_CV.pdf" download className="secondary-btn">Download CV</a>
+              </motion.div>
 
-              <div className="social-links">
-                  <a href="https://github.com/higantk2" target="_blank" rel="noopener noreferrer" className="social-icon"><i className="fab fa-github"></i></a>
-                  <a href="https://vercel.com/kindoll-hyacinth-peraans-projects" target="_blank" rel="noopener noreferrer" className="social-icon"><i className="fas fa-code"></i></a>
-                  <a href="https://www.facebook.com/damiankyzen" target="_blank" rel="noopener noreferrer" className="social-icon"><i className="fab fa-facebook"></i></a>
-              </div>
-          </div>
-          <div className="profile-image-container">
+              <motion.div className="social-links" variants={fadeInUp}>
+                  <a href="https://github.com/higantk2" target="_blank" className="social-icon"><i className="fab fa-github"></i></a>
+                  <a href="https://facebook.com" target="_blank" className="social-icon"><i className="fab fa-facebook"></i></a>
+                  <a href="https://www.instagram.com/_kindoll1/" target="_blank" className="social-icon"><i className="fab fa-instagram"></i></a>
+                  <a href="https://vercel.com/" target="_blank" className="social-icon"><i className="fas fa-code"></i></a>
+              </motion.div>
+          </motion.div>
+
+          {/* RIGHT SIDE: Profile Image */}
+          <motion.div 
+            className="profile-image-container"
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.8 }}
+          >
               <img src="https://i.pinimg.com/originals/5e/a0/fa/5ea0faff904b5289355ddf226d89193e.jpg" alt="KINDOLL HYACINTH" className="profile-image" />
-          </div>
+          </motion.div>
       </section>
 
-      {/* Projects Section - FULLY EXPANDED */}
+      {/* Projects Section */}
       <section id="projects" className="container">
-          <h2>Featured Projects</h2>
-          <div className="project-grid">
-              
-              {/* Project 1: Educational Tour */}
-              <div className="project-card">
-                  <img src="/images/image7.jpg" alt="Educational Tour" className="project-image" />
-                  <div className="project-content">
-                      <div className="project-header">
-                          <h3 className="project-title">Educational Tour</h3>
-                          <div className="project-links">
-                              <a href="https://eductour.vercel.app/" target="_blank" rel="noopener noreferrer"><i className="fas fa-external-link-alt"></i></a>
-                          </div>
-                      </div>
-                      <p className="project-description">An immersive travel journal website featuring photo galleries and daily logs.</p>
-                      <div className="tags project-tags">
-                          <span className="tag">HTML</span> <span className="tag">CSS</span> <span className="tag">JS</span>
-                      </div>
-                  </div>
-              </div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+          >
+            Featured Projects
+          </motion.h2>
 
-              {/* Project 2: Valentine Surprise */}
-              <div className="project-card">
-                  <img src="/images/image1.jpg" alt="Valentine Surprise" className="project-image" />
-                  <div className="project-content">
-                      <div className="project-header">
-                          <h3 className="project-title">Valentine Surprise</h3>
-                          <div className="project-links">
-                              <a href="https://valentines-blush-delta.vercel.app/" target="_blank" rel="noopener noreferrer"><i className="fas fa-external-link-alt"></i></a>
-                          </div>
-                      </div>
-                      <p className="project-description">A special animated dashboard project deployed on Vercel.</p>
-                      <div className="tags project-tags">
-                          <span className="tag">CSS</span> <span className="tag">JS</span> <span className="tag">SCSS</span>
-                      </div>
-                  </div>
-              </div>
-
-              {/* Project 3: Valorant Agent Tracker */}
-              <div className="project-card">
-                  <img src="/images/image2.jpg" alt="Valorant Agent Tracker" className="project-image" />
-                  <div className="project-content">
-                      <div className="project-header">
-                          <h3 className="project-title">Valorant Agent Tracker</h3>
-                          <div className="project-links">
-                              <a href="https://valoraanttt.vercel.app/" target="_blank" rel="noopener noreferrer"><i className="fas fa-external-link-alt"></i></a>
-                          </div>
-                      </div>
-                      <p className="project-description">A data tracking application for Valorant players using modern API integration.</p>
-                      <div className="tags project-tags">
-                          <span className="tag">React</span> <span className="tag">API</span>
-                      </div>
-                  </div>
-              </div>
-
-              {/* Project 4: Web Exercise 2 */}
-              <div className="project-card">
-                  <img src="/images/image4.jpg" alt="Web Exercise 2" className="project-image" />
-                  <div className="project-content">
-                      <div className="project-header">
-                          <h3 className="project-title">Web Exercise 2</h3>
-                          <div className="project-links">
-                              <a href="https://exercise2-chi.vercel.app/" target="_blank" rel="noopener noreferrer"><i className="fas fa-external-link-alt"></i></a>
-                          </div>
-                      </div>
-                      <p className="project-description">Class exercise focusing on layout and responsiveness.</p>
-                      <div className="tags project-tags">
-                          <span className="tag">HTML</span> <span className="tag">CSS</span>
-                      </div>
-                  </div>
-              </div>
-
-              {/* Project 5: Exercise 7 */}
-              <div className="project-card">
-                  <img src="/images/image5.jpg" alt="Exercise 7" className="project-image" />
-                  <div className="project-content">
-                      <div className="project-header">
-                          <h3 className="project-title">Exercise 7</h3>
-                          <div className="project-links">
-                              <a href="https://exercise-7-taupe.vercel.app/" target="_blank" rel="noopener noreferrer"><i className="fas fa-external-link-alt"></i></a>
-                          </div>
-                      </div>
-                      <p className="project-description">Frontend development practice and component structure.</p>
-                      <div className="tags project-tags">
-                          <span className="tag">React</span> <span className="tag">JS</span>
-                      </div>
-                  </div>
-              </div>
-
-              {/* Project 6: Adv102 Final Project */}
-              <div className="project-card">
-                  <img src="/images/image3.jpg" alt="Adv102 Final Project" className="project-image" />
-                  <div className="project-content">
-                      <div className="project-header">
-                          <h3 className="project-title">Adv102 Final Project</h3>
-                          <div className="project-links">
-                              <a href="https://advfinals.vercel.app/" target="_blank" rel="noopener noreferrer"><i className="fas fa-external-link-alt"></i></a>
-                          </div>
-                      </div>
-                      <p className="project-description">Final project submission showcasing advanced web techniques and databases.</p>
-                      <div className="tags project-tags">
-                          <span className="tag">Next.js</span> <span className="tag">DB</span>
-                      </div>
-                  </div>
-              </div>
-
-          </div>
+          <motion.div 
+            className="project-grid"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.1 }}
+            variants={staggerContainer}
+          >
+              {[
+                { title: "Educational Tour", img: "/images/image7.jpg", desc: "Immersive travel journal.", tags: ["HTML", "CSS", "JS"], link: "https://eductour.vercel.app/" },
+                { title: "Valorant Tracker", img: "/images/image2.jpg", desc: "Agent tracking app.", tags: ["React", "API"], link: "https://valoraanttt.vercel.app/" },
+                { title: "Valentine Surprise", img: "/images/image1.jpg", desc: "Animated dashboard.", tags: ["SCSS", "JS"], link: "https://valentines-blush-delta.vercel.app/" },
+                { title: "Web Exercise 2", img: "/images/image4.jpg", desc: "Layout practice.", tags: ["HTML", "CSS"], link: "https://exercise2-chi.vercel.app/" },
+                { title: "Exercise 7", img: "/images/image5.jpg", desc: "JS Logic.", tags: ["React", "JS"], link: "https://exercise-7-taupe.vercel.app/" },
+                { title: "Adv102 Final", img: "/images/image3.jpg", desc: "Advanced Web Tech.", tags: ["Next.js", "DB"], link: "https://advfinals.vercel.app/" }
+              ].map((project, index) => (
+                <motion.div key={index} className="project-card" variants={fadeInUp} whileHover={{ y: -10 }}>
+                    <img src={project.img} alt={project.title} className="project-image" />
+                    <div className="project-content">
+                        <h3 className="project-title">{project.title}</h3>
+                        <p>{project.desc}</p>
+                        <div className="tags project-tags">
+                            {project.tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
+                        </div>
+                        <div className="project-links">
+                             <a href={project.link} target="_blank"><i className="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </motion.div>
+              ))}
+          </motion.div>
       </section>
 
       {/* Contact Section */}
       <section id="contact" className="container">
-          <h2>Get In Touch</h2>
-          <div className="contact-wrapper">
-              <p>I&apos;m currently looking for internships and new opportunities. Send me a message below!</p>
+          <motion.div 
+            className="contact-wrapper"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5 }}
+          >
+              <h2>Get In Touch</h2>
+              <p>I&apos;m currently looking for internships. Send me a message below!</p>
               
               <form action="https://formspree.io/f/xqarljrb" method="POST" className="contact-form">
-                  <div className="form-group">
-                      <input type="text" name="name" placeholder="Your Name" required />
-                  </div>
-                  <div className="form-group">
-                      <input type="email" name="email" placeholder="Your Email" required />
-                  </div>
-                  <div className="form-group">
-                      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                  </div>
-                  <button type="submit" className="primary-btn">Send Message <i className="fas fa-paper-plane"></i></button>
+                  <div className="form-group"><input type="text" name="name" placeholder="Your Name" required /></div>
+                  <div className="form-group"><input type="email" name="email" placeholder="Your Email" required /></div>
+                  <div className="form-group"><textarea name="message" rows="5" placeholder="Your Message" required></textarea></div>
+                  <button type="submit" className="primary-btn">Send Message <i className="fas fa-paper-plane" style={{marginLeft: '8px'}}></i></button>
               </form>
-          </div>
+          </motion.div>
       </section>
     </main>
   );

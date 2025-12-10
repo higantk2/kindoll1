@@ -1,6 +1,20 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
 
 export default function Certificates() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -15,28 +29,45 @@ export default function Certificates() {
   ];
 
   return (
-    <section className="container cert-container" style={{ paddingTop: '100px' }}>
-        <div className="cert-header">
+    <section className="container cert-container">
+        <motion.div 
+          className="cert-header"
+          initial="hidden"
+          animate="visible" // Force immediate load
+          transition={{ duration: 0.6 }}
+          variants={fadeInUp}
+        >
             <h1>My Certificates</h1>
             <p>Click on any certificate to view it in full size.</p>
-        </div>
+        </motion.div>
         
-        <div className="cert-grid">
+        <motion.div 
+          className="cert-grid"
+          initial="hidden"
+          animate="visible" // Force immediate load
+          variants={staggerContainer}
+        >
             {certificates.map((cert, index) => (
-                <img 
+                <motion.img 
                     key={index}
                     src={cert.src} 
                     alt={cert.alt} 
                     className="cert-image"
                     onClick={() => setSelectedImage(cert)}
+                    variants={fadeInUp}
+                    whileHover={{ scale: 1.05 }}
                 />
             ))}
-        </div>
+        </motion.div>
 
         {/* Modal Logic */}
         {selectedImage && (
-            <div id="cert-modal" className="modal" style={{ display: 'block' }} onClick={() => setSelectedImage(null)}>
-                <span className="close-modal" onClick={() => setSelectedImage(null)}>&times;</span>
+            <div 
+                className="modal" 
+                style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.95)' }} 
+                onClick={() => setSelectedImage(null)}
+            >
+                <span className="close-modal">&times;</span>
                 <img className="modal-content" src={selectedImage.src} alt={selectedImage.alt} />
                 <div id="caption">{selectedImage.alt}</div>
             </div>
